@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  data-sync:
+    image: exdatic/data-sync:latest
+    build: .
+    environment:
+      - SYNC_FOLDER=/data
+      - SYNC_GROUP=data-sync
+      # - SYNC_GROUP={{.Service.Name}}
+      - SYNC_INTERVAL=300
+      - SYNC_TIMEOUT=0
+      - SYNC_TYPE=next
+      - START_DELAY=10
+      - DEBUG
+    deploy:
+      mode: global
+      endpoint_mode: dnsrr
+    restart: always
+    volumes:
+      - data:/data
+
+volumes:
+  data:
